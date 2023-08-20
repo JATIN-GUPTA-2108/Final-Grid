@@ -1,4 +1,3 @@
-import json
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -48,7 +47,7 @@ def recommendationSystem(user):
         return set(recommended_products[:50])
 
     # User - User Similarity Recommendation System
-    def collaborative_filtering(user_df, user):
+    def collaborative_filtering(user_df, items_checked_by_user, user):
         # Building User Product Matrix and remove Nan Values from it
         user_product_matrix = user_df.pivot_table(
             index='userid', columns='productid', values='event').applymap(
@@ -67,10 +66,6 @@ def recommendationSystem(user):
         similar_users = user_user_sim_matrix.loc[user].sort_values(
             ascending=False)
 
-        # Items to be removed as user has already viewed them
-        items_checked_by_user = set(
-            user_product_matrix.loc[user].iloc[user_product_matrix.loc[user].to_numpy().nonzero()].index)
-
         similar_users_id = list(similar_users.head(4).index)
 
         recommendation_set = set()
@@ -84,7 +79,7 @@ def recommendationSystem(user):
         return (recommendation_set - items_checked_by_user)
 
     # User Preference Recommendation System
-    def content_filtering(user_df, product_df, user):
+    def content_filtering(user_df, product_df, items_checked_by_user,  user):
 
         # Transposing Matrix and setting index as productid
         product_df = product_df.T
@@ -129,9 +124,6 @@ def recommendationSystem(user):
         weighted_preference_category_matrix = weighted_preference_category_matrix.sort_values(
             'preference', ascending=False)
 
-        # Items to be removed from the recommended items as the user has already viewed them
-        items_checked_by_user = set(user_product_table.index)
-
         recommendation_set = set(
             weighted_preference_category_matrix.head(50).index)
 
@@ -142,10 +134,10 @@ def recommendationSystem(user):
                   'Like': 2, 'Add_to_cart': 3, 'Purchase': 4}
 
     # Formatting and cleaning the user logs
-    user_log_df = data_formatting(pd.read_json(r'C:\Users\JATIN\Desktop\Final Grid\logs.json'))
+    user_log_df = data_formatting(pd.read_json(r'C:\Users\Lakshay Kumar\Desktop\final grid\Final-Grid\logs.json'))
 
     # Reading Product Data
-    product_df = pd.read_json(r'C:\Users\JATIN\Desktop\Final Grid\allProducts.json')
+    product_df = pd.read_json(r'C:\Users\Lakshay Kumar\Desktop\final grid\Final-Grid\allProducts.json')
 
     # Recommended products based on popularity
     cold_start_recommendation_set = cold_start(product_df)
@@ -155,15 +147,22 @@ def recommendationSystem(user):
 
     # Checking if user is present in the user logs or not
     if user in user_log_df['userid'].unique():
+        # Items checked by user
+        items_checked_by_user = set(user_log_df.loc[user_log_df['userid'] == user].set_index(
+            'productid').drop('userid', axis=1).index)
+        
+        cold_start_recommendation_set -= items_checked_by_user
+        
         # Recommended products based on user-user similarity
         user_user_recommendation_set = collaborative_filtering(
-            user_log_df, user)
+            user_log_df, items_checked_by_user, user)
         # Recommended products based on user preferences
         content_recommendation_set = content_filtering(
-            user_log_df, product_df, user)
+            user_log_df, product_df, items_checked_by_user, user)
     else:
         print('New User Detected')
 
     print('Recommendations generated for user!')
 
     return list(cold_start_recommendation_set | user_user_recommendation_set | content_recommendation_set)[:100]
+
