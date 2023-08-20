@@ -14,10 +14,16 @@ function Category() {
       // console.log(response.data);
       // JSON.stringify(response)
       console.log(response.data.result)
-      setRecommendedProducts(...response.data.result)
-      setToBeDisplayed(...response.data.result)
+      setRecommendedProducts(prevArray => [...prevArray,2 ]);
 
-      console.log(recommendedProducts)
+      // setRecommendedProducts( ...recommendedProducts,...response.data.result)
+      // console.log(recommendedProducts)
+      const filteredList = PRODUCTS.filter(dict => response.data.result.includes(dict.id));
+      console.log(filteredList)
+
+      setToBeDisplayed(filteredList)
+      console.log(toBeDisplayed)
+
     });
   }, [])
   // calling python function
@@ -58,11 +64,12 @@ function Category() {
     setMen(!Men);
 
     if (Men) {
-
+      
       // set.add(Type);
       // setMen(prev => new Set(prev.add(event)))
       setState(prev => new Set(prev.add(Type)))
       console.log(state);
+      // const filteredList = toBeDisplayed.filter(dict => toBeDisplayed.Category.includes(state));
 
       // console.log(set);
     } else {
@@ -382,197 +389,201 @@ function Category() {
 
   return (
     <>
-      {/* {  callPythonFunction()} */}
-  
-      <h2 className="mx-5 mt-4 category-col">Categories</h2>
+      <div className="container main-body">
+        <div className="left">
+          <h2 className="mx-5 mt-4 category-col">Categories</h2>
 
-      <div className="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="men"
-          id="flexCheckDefault"
-          onChange={ChangeMen}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Men
-        </label>
-      </div>
+          <div className="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="men"
+              id="flexCheckDefault"
+              onChange={ChangeMen}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Men
+            </label>
+          </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="women"
-          id="flexCheckDefault"
-          onChange={ChangeWomen}
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="women"
+              id="flexCheckDefault"
+              onChange={ChangeWomen}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Women
+            </label>
+          </div>
 
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Women
-        </label>
-      </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="kids"
+              id="flexCheckDefault"
+              onChange={ChangeKids}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Kids
+            </label>
+          </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="kids"
-          id="flexCheckDefault"
-          onChange={ChangeKids}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Kids
-        </label>
-      </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="mouse"
+              id="flexCheckDefault"
+              onChange={ChangeMouse}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Mouse
+            </label>
+          </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="smartphones"
+              id="flexCheckDefault"
+              onChange={ChangeSmartphones}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Smartphones
+            </label>
+          </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="mouse"
-          id="flexCheckDefault"
-          onChange={ChangeMouse}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Mouse
-        </label>
-      </div>
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="smartphones"
-          id="flexCheckDefault"
-          onChange={ChangeSmartphones}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Smartphones
-        </label>
-      </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="chargers"
+              id="flexCheckDefault"
+              onChange={ChangeChargers}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Chargers
+            </label>
+          </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="chargers"
-          id="flexCheckDefault"
-          onChange={ChangeChargers}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Chargers
-        </label>
-      </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="makeup"
+              id="flexCheckDefault"
+              onChange={ChangeMakeup}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Makeup
+            </label>
+          </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="makeup"
-          id="flexCheckDefault"
-          onChange={ChangeMakeup}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Makeup
-        </label>
-      </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="fitness"
+              id="flexCheckDefault"
+              onChange={ChangeFitness}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Fitness
+            </label>
+          </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="fitness"
-          id="flexCheckDefault"
-          onChange={ChangeFitness}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Fitness
-        </label>
-      </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="keyboards"
+              id="flexCheckDefault"
+              onChange={ChangeKeyboards}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Keyboards
+            </label>
+          </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="keyboards"
-          id="flexCheckDefault"
-          onChange={ChangeKeyboards}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Keyboards
-        </label>
-      </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="combs"
+              id="flexCheckDefault"
+              onChange={ChangeCombs}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Combs
+            </label>
+          </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="combs"
-          id="flexCheckDefault"
-          onChange={ChangeCombs}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Combs
-        </label>
-      </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="refrigerators"
+              id="flexCheckDefault"
+              onChange={ChangeRefrigerators}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Refrigerators
+            </label>
+          </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="refrigerators"
-          id="flexCheckDefault"
-          onChange={ChangeRefrigerators}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Refrigerators
-        </label>
-      </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="laptops"
+              id="flexCheckDefault"
+              onChange={ChangeLaptops}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Laptops
+            </label>
+          </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="laptops"
-          id="flexCheckDefault"
-          onChange={ChangeLaptops}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Laptops
-        </label>
-      </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="airConditoners"
+              id="flexCheckDefault"
+              onChange={ChangeAirconditioners}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Air Conditoners
+            </label>
+          </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="airConditoners"
-          id="flexCheckDefault"
-          onChange={ChangeAirconditioners}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Air Conditoners
-        </label>
-      </div>
+          <div class="form-check mx-5 my-1.5">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="perfumes"
+              id="flexCheckDefault"
+              onChange={ChangePerfumes}
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Perfumes
+            </label>
+          </div>
+          <br />
+        </div>
 
-      <div class="form-check mx-5 my-1.5">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          value="perfumes"
-          id="flexCheckDefault"
-          onChange={ChangePerfumes}
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Perfumes
-        </label>
-      </div>
-      <br />
-      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        {[...PRODUCTS].map((product) => (
-          <Prod key={product.id} data={product} />
-        ))}
-
+        <div className="right">
+          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            {console.log(toBeDisplayed)}
+            {[...toBeDisplayed].map((product) => (
+              <Prod key={product.id} data={product} />
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );

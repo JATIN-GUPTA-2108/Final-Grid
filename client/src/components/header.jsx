@@ -119,7 +119,7 @@ const header = () => {
               <div className='menu-links mt-2 d-none d-md-flex d-lg-flex'>
                 <div className='ms-auto gap-3'><NavLink to="/" className={location.pathname === '/' ? 'active' : 'not-active'} onClick={toggleMenu}>HOME</NavLink></div>
                 <div className='ms-auto gap-3'><NavLink to="/shop" className={location.pathname === '/shop' ? 'active' : 'not-active'} onClick={toggleMenu}>SHOP</NavLink></div>
-                <div className='ms-auto gap-3'><NavLink to="/category" className={location.pathname === '/category' ? 'active' : 'not-active'} onClick={toggleMenu}>CATEGORY</NavLink></div>
+                {/* <div className='ms-auto gap-3'><NavLink to="/category" className={location.pathname === '/category' ? 'active' : 'not-active'} onClick={toggleMenu}>CATEGORY</NavLink></div> */}
                 <div className='ms-auto gap-3'><NavLink to="/recommend" className={location.pathname === '/recommend' ? 'active' : 'not-active'} onClick={toggleMenu}>RECOMMENDATION</NavLink></div>
                 <div className='ms-auto gap-3'><NavLink to="/blog" className={location.pathname === '/blog' ? 'active' : 'not-active'} onClick={toggleMenu}>BLOG</NavLink></div>
                 <div className='ms-auto gap-3'><NavLink to="/about" className={location.pathname === '/about' ? 'active' : 'not-active'} onClick={toggleMenu}>ABOUT</NavLink></div>
