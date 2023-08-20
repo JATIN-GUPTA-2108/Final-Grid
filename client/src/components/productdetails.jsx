@@ -129,10 +129,11 @@ const ProductDetails = () => {
                   -
                 </button>
 
-                <div className="rating mx-5 "  style={{"backgroundColor":"black"}}>
+                <div className="rating mx-5 my-2 prod-rating" >
                   <label for="customRange2" class="form-label">
                     Product Rating
                   </label>
+                  {rating}
                   <input
                     type="range"
                     class="form-range"
@@ -141,7 +142,6 @@ const ProductDetails = () => {
                     id="customRange2"
                     onChange={(e) => setrating(e.target.value)}
                   />
-                  {rating}
                 </div>
                 <button onClick={() => {
                   updateProduct(6, product.id);
