@@ -125,6 +125,14 @@ app.put('/updateProducts', express.json(), (req, res) => {
     res.send('JSON file updated successfully');
   });
 });
+app.get('/getObjects', express.json(), (req, res) => {
+  let rawdata2 = fs.readFileSync("../recommendationSystem/response.json")
+  let a2 = JSON.parse(rawdata2)
+console.log(a2)
+  
+    res.send('JSON file updated successfully');
+  });
+
 
 app.put('/updateUserLogs', express.json(), (req, res) => {
   let rawdata2 = fs.readFileSync("../logs.json")

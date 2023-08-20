@@ -1,47 +1,27 @@
 import React from "react";
 import "./category.css";
-import { useState  , useEffect } from "react";
-
+import { useState, useEffect } from "react";
+import Prod from "../components/prod";
+import { PRODUCTS } from "../components/products"
+import axios from "axios";
 function Category() {
-  useEffect(() => {
-    console.log("hell")
-    try {
-      
-        const response =  fetch('http://localhost:5000/api/recommendation_system', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+  const [recommendedProducts, setRecommendedProducts ] = useState([]);
+  const [toBeDisplayed, setToBeDisplayed] = useState([]);
 
-          body: JSON.stringify({ param: localStorage.getItem("Uid") })
-        }).then(function (resp)
-        {
-          console.log(resp)
-          console.log(resp.body)
-          // console.log(resp.json())
-          
-          
-          
-        });
-      console.log(response)
-        console.log(JSON.stringify(response))
-        // JSON.stringify(response.JSON)
-        // const data = await response.json();
-        // console.log(data)
-        // setResult(data.result[0]);
-      }
-    catch (error) {
-        console.error('Error calling Python function:', error);
-      }
-    
+  useEffect( () => {
+    console.log("hell")
+    axios.post("http://localhost:5000/api/recommendation_system", { param: localStorage.getItem("Uid") }).then((response) => {
+      // console.log(response.data);
+      // JSON.stringify(response)
+      console.log(response.data.result)
+      setRecommendedProducts(...response.data.result)
+      setToBeDisplayed(...response.data.result)
+
+      console.log(recommendedProducts)
+    });
   }, [])
   // calling python function
-  const [result, setResult] = useState('');
-
-  const callPythonFunction = async () => {
-    console.log(typeof(localStorage.getItem("Uid")))
-    
-  };
+  
   ///////
   
   
@@ -78,11 +58,11 @@ function Category() {
     setMen(!Men);
 
     if (Men) {
+
       // set.add(Type);
       // setMen(prev => new Set(prev.add(event)))
       setState(prev => new Set(prev.add(Type)))
       console.log(state);
-
 
       // console.log(set);
     } else {
@@ -402,7 +382,8 @@ function Category() {
 
   return (
     <>
-    {/* {  callPythonFunction()} */}
+      {/* {  callPythonFunction()} */}
+  
       <h2 className="mx-5 mt-4 category-col">Categories</h2>
 
       <div className="form-check mx-5 my-1.5">
@@ -587,6 +568,12 @@ function Category() {
         </label>
       </div>
       <br />
+      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {[...PRODUCTS].map((product) => (
+          <Prod key={product.id} data={product} />
+        ))}
+
+      </div>
     </>
   );
 }

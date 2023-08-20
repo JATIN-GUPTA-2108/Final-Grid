@@ -15,7 +15,7 @@ def recommendation_system():
     
     recommendations = recommendationSystem(userid)
     print({'result': recommendations})
-    return(jsonify({'result': recommendations}))
+    return({'result': recommendations})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
