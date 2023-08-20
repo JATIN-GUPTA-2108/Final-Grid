@@ -11,13 +11,38 @@ import { PRODUCTS1 } from '../components/products'
 import { ShopContext } from '../components/shopcontext'
 import CartItem from '../components/cartitem'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 
 const cart = (props) => {
+
+  const updateUsers = async (id) => {
+    
+    console.log(id)
+    const date = new Date();
+    let userlog = {
+      "Uid": localStorage.getItem("Uid"),
+      "Pid": id,
+      "type": 4,
+      "time": date.getTime()
+    }
+    // axios.put('http://localhost:8000/updateUserLogs', userlog)
+    //   .then(response => {
+    //     console.log(response);
+    //     // setData(updatedData); // Update local state if update on server succeeds
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+    let y = await axios.put('http://localhost:8000/updateUserLogs', userlog)
+     
+    console.log(y);
+  }
     const { cartItems, getTotalCartAmount, clearCart } = useContext(ShopContext);
     const totalAmount = getTotalCartAmount();
     const navigate = useNavigate();
     const [isMobile, setIsMobile] = useState(false)
+  const [items, setItems] = useState([])
 
     const handleResize = () => {
       if (window.innerWidth < 576) {
@@ -47,12 +72,14 @@ const cart = (props) => {
 
     <div className="p-3">
     {[...PRODUCTS, ...PRODUCTS1].map((product) => {
-        if (cartItems[product.id] !== 0) {
-            return <CartItem key={product.id} data={product} />;
-        }
+      if (cartItems[product.id] !== 0) {
+
+        return <CartItem key={product.id} data={product} />;
+      }
+      
         })}
         <div className='col-12 p-2 text-end'>
-        <button onClick={() => clearCart()} id='clear-cart'> Clear Cart </button>
+        {/* <button onClick={() => clearCart()} id='clear-cart'> Clear Cart </button> */}
         </div>
 
         <hr />
@@ -77,7 +104,45 @@ const cart = (props) => {
               </div>
             </div>
             <button
-              onClick={() => navigate("/checkout")}
+                        onClick={() => {
+                          let arr = [];
+                          [...PRODUCTS, ...PRODUCTS1].map((product) => {
+                            if (cartItems[product.id] !== 0) {
+                              // arr.push(product.id)
+                              setItems(items => [...items, product.id])
+                              console.log(items)
+                              arr.push(product.id)
+                              console.log(product.id)
+                              // const date = new Date();
+                              // let userlog = {
+                              //   "Uid": localStorage.getItem("Uid"),
+                              //   "Pid": product.id,
+                              //   "type": 4,
+                              //   "time": date.getTime()
+                              // }
+                              // axios.put('http://localhost:8000/updateUserLogs', userlog)
+                              //   .then(response => {
+                              //     console.log(response);
+                              //     // setData(updatedData); // Update local state if update on server succeeds
+                              //   })
+                              //   .catch(error => {
+                              //     console.error(error);
+                              //   });
+                              updateUsers(product.id)
+                            }
+                          })
+                          // setItems(items => [...items, ...arr])
+
+                          console.log(arr)
+
+                          setItems(old => [...old, ...arr]);
+                          console.log(items)
+
+                          navigate("/checkout")
+                        
+                        }
+                          
+                        }
               className="mt-5"
             >
               {isMobile ? "Check Out" : "Proceed to Checkout"}

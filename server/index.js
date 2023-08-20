@@ -9,10 +9,7 @@ var app = express();
 
 app.use(cors());
 
-let rawdata = fs.readFileSync("allProductsNew.json")
-let a= JSON.parse(rawdata)
-let rawdata2 = fs.readFileSync("logs.json")
-let a2 = JSON.parse(rawdata2)
+
 // console.log(a2)
 // console.log(a);
 // Object.entries(a).forEach(([key, value]) => {
@@ -80,14 +77,17 @@ app.get('*', function (req, res) {
 });
 app.put('/updateProducts', express.json(), (req, res) => {
   // a[updatedData.Pid].likes++;
+
+  let rawdata = fs.readFileSync("../allProducts.json")
+  let a = JSON.parse(rawdata)
   const updatedData = req.body;
   console.log("here")
-// console.log(a[499].likes)
+  // console.log(a[499].likes)
   if (updatedData.type == 2) {
     a[updatedData.Pid].likes++;
   }
   if (updatedData.type == -2) {
-    a[updatedData.Pid].dislikes--;
+    a[updatedData.Pid].dislikes++;
 
   }
   if (updatedData.type == 1) {
@@ -99,7 +99,7 @@ app.put('/updateProducts', express.json(), (req, res) => {
 
   }
   if (updatedData.type == 4) {
-    a[updatedData.Pid].purchase++;
+    a[updatedData.Pid].purchases++;
 
   }
   if (updatedData.type == 5) {
@@ -108,15 +108,15 @@ app.put('/updateProducts', express.json(), (req, res) => {
   }
   if (updatedData.type == 6) {
 
-    let newrating = (a[updatedData.Pid].normalRating * a[updatedData.Pid].views-1) + updatedData.rating;
+    let newrating = (a[updatedData.Pid].normalRating * a[updatedData.Pid].views - 1) + updatedData.rating;
     newrating /= a[updatedData.Pid].views
-    a[updatedData.Pid].normalRating=newrating;
+    a[updatedData.Pid].normalRating = newrating;
 
   }
   let m = JSON.stringify(a)
 
   // fs.writeFileSync('allProducts[1].json', m);
-  fs.writeFile('allProductsNew.json', m , 'utf8', (err) => {
+  fs.writeFile('../allProducts.json', m, 'utf8', (err) => {
     if (err) {
       console.error(err);
       res.status(500).send('Error updating JSON file');
@@ -127,9 +127,11 @@ app.put('/updateProducts', express.json(), (req, res) => {
 });
 
 app.put('/updateUserLogs', express.json(), (req, res) => {
-  
+  let rawdata2 = fs.readFileSync("../logs.json")
+  let a2 = JSON.parse(rawdata2)
+
   const updatedData = req.body;
-  console.log(updatedData)
+  // console.log(updatedData)
   if (updatedData.event == 3) {
     //set add to cart but how?
     //when bought return all values from frontend 
@@ -150,9 +152,11 @@ app.put('/updateUserLogs', express.json(), (req, res) => {
   }
   projects.push(newLog)
   let data = JSON.stringify(projects);
+  console.log(data)
 
   // fs.writeFileSync('logs.json', data);
-  fs.writeFile('logs.json', data, 'utf8', (err) => {
+  // async () => await
+  fs.writeFile('../logs.json', data, 'utf8', (err) => {
     if (err) {
       console.error(err);
       res.status(500).send('Error updating JSON file');

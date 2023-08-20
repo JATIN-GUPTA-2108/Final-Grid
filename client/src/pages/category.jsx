@@ -1,8 +1,52 @@
 import React from "react";
 import "./category.css";
-import { useState } from "react";
+import { useState  , useEffect } from "react";
 
-function category() {
+function Category() {
+  useEffect(() => {
+    console.log("hell")
+    try {
+      
+        const response =  fetch('http://localhost:5000/api/recommendation_system', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+
+          body: JSON.stringify({ param: localStorage.getItem("Uid") })
+        }).then(function (resp)
+        {
+          console.log(resp)
+          console.log(resp.body)
+          // console.log(resp.json())
+          
+          
+          
+        });
+      console.log(response)
+        console.log(JSON.stringify(response))
+        // JSON.stringify(response.JSON)
+        // const data = await response.json();
+        // console.log(data)
+        // setResult(data.result[0]);
+      }
+    catch (error) {
+        console.error('Error calling Python function:', error);
+      }
+    
+  }, [])
+  // calling python function
+  const [result, setResult] = useState('');
+
+  const callPythonFunction = async () => {
+    console.log(typeof(localStorage.getItem("Uid")))
+    
+  };
+  ///////
+  
+  
+  
+  
   const [Men, setMen] = useState("false");
   const [Women, setWomen] = useState("false");
   const [Kids, setKids] = useState("false");
@@ -18,279 +62,347 @@ function category() {
   const [Perfumes, setPerfumes] = useState("false");
   const [Smartphones, setSmartphones] = useState("false");
 
-  const set = new Set();
+  // const set = new Set();
+  const [state, setState] = useState(new Set("p"))
+
+
+  // const [Men, setMen] = useState(new Set());
+  // const [Women, setWomen] = useState(new Set());
+
 
   const ChangeMen = (event) => {
     const Type = event.target.value;
-    let val=!Men;
+    let val = !Men;
     console.log(val);
 
     setMen(!Men);
 
     if (Men) {
-      let arr=[Type];
-      const newSet = new Set([ ...set,...arr ]);
-      console.log(newSet);
-      // const tempset = new set([...Airconditioners.])
-      set.add(Type);
-      console.log(set);
+      // set.add(Type);
+      // setMen(prev => new Set(prev.add(event)))
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
+
+
+      // console.log(set);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        // set.delete(Type);
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
+
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeWomen = (event) => {
     const Type = event.target.value;
-    let val=!Women;
+    let val = !Women;
     console.log(val);
 
     setWomen(!Women);
 
     if (Women) {
-      set.add(Type);
-      console.log(set);
+      // set.add(Type);
+      setState(prev => new Set(prev.add(Type)))
+
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeKids = (event) => {
     const Type = event.target.value;
-    let val=!Kids;
+    let val = !Kids;
     console.log(val);
 
     setKids(!Kids);
 
     if (Kids) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeMouse = (event) => {
     const Type = event.target.value;
-    let val=!Mouse;
+    let val = !Mouse;
     console.log(val);
 
     setMouse(!Mouse);
 
     if (Mouse) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeChargers = (event) => {
     const Type = event.target.value;
-    let val=!Chargers;
+    let val = !Chargers;
     console.log(val);
 
     setChargers(!Chargers);
 
     if (Chargers) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeMakeup = (event) => {
     const Type = event.target.value;
-    let val=!Makeup;
+    let val = !Makeup;
     console.log(val);
 
     setMakeup(!Makeup);
 
     if (Makeup) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeFitness = (event) => {
     const Type = event.target.value;
-    let val=!Fitness;
+    let val = !Fitness;
     console.log(val);
 
     setFitness(!Fitness);
 
     if (Fitness) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeKeyboards = (event) => {
     const Type = event.target.value;
-    let val=!Keyboards;
+    let val = !Keyboards;
     console.log(val);
 
     setKeyboards(!Keyboards);
 
     if (Keyboards) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeCombs = (event) => {
     const Type = event.target.value;
-    let val=!Combs;
+    let val = !Combs;
     console.log(val);
 
     setCombs(!Combs);
 
     if (Combs) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeRefrigerators = (event) => {
     const Type = event.target.value;
-    let val=!Refrigerators;
+    let val = !Refrigerators;
     console.log(val);
 
     setRefrigerators(!Refrigerators);
 
     if (Refrigerators) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeLaptops = (event) => {
     const Type = event.target.value;
-    let val=!Laptops;
+    let val = !Laptops;
     console.log(val);
 
     setLaptops(!Laptops);
 
     if (Laptops) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeAirconditioners = (event) => {
     const Type = event.target.value;
-    let val=!Airconditioners;
+    let val = !Airconditioners;
     console.log(val);
 
     setAirconditioners(!Airconditioners);
 
     if (Airconditioners) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangePerfumes = (event) => {
     const Type = event.target.value;
-    let val=!Perfumes;
+    let val = !Perfumes;
     console.log(val);
 
     setPerfumes(!Perfumes);
 
     if (Perfumes) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   const ChangeSmartphones = (event) => {
     const Type = event.target.value;
-    let val=!Smartphones;
+    let val = !Smartphones;
     console.log(val);
     setSmartphones(!Smartphones);
 
     if (Smartphones) {
-      set.add(Type);
-      console.log(set);
+      setState(prev => new Set(prev.add(Type)))
+      console.log(state);
     } else {
       console.log("false");
-      if (set.has(Type)) {
-        set.delete(Type);
+      if (state.has(Type)) {
+        setState(prev => {
+          prev.delete(Type);
+          return new Set(prev);
+        })
       }
-      console.log(set);
+      console.log(state);
     }
+    console.log(state);
   };
 
   return (
     <>
+    {/* {  callPythonFunction()} */}
       <h2 className="mx-5 mt-4 category-col">Categories</h2>
 
       <div className="form-check mx-5 my-1.5">
@@ -313,6 +425,7 @@ function category() {
           value="women"
           id="flexCheckDefault"
           onChange={ChangeWomen}
+
         />
         <label class="form-check-label" for="flexCheckDefault">
           Women
@@ -478,4 +591,4 @@ function category() {
   );
 }
 
-export default category;
+export default Category;

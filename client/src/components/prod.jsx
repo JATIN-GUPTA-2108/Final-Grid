@@ -27,14 +27,15 @@ const prod = (props) => {
       });
     
     const date = new Date();
-
-    let userlog = {
-      "Uid": localStorage.getItem("Uid"),
-      "Pid": id,
-      "type": type,
-      "time": date.getTime()
-    }
-    axios.put('http://localhost:8000/updateUserLogs', userlog)
+    if (type != 6 && type != 5) {
+  
+      let userlog = {
+        "Uid": localStorage.getItem("Uid"),
+        "Pid": id,
+        "type": type,
+        "time": date.getTime()
+      }
+      axios.put('http://localhost:8000/updateUserLogs', userlog)
       .then(response => {
         console.log(response);
         // setData(updatedData); // Update local state if update on server succeeds
@@ -42,7 +43,8 @@ const prod = (props) => {
       .catch(error => {
         console.error(error);
       });
-  };
+    };
+  }
 
     const {id, name, price, image, brand} = props.data;
     const { addToCart, cartItems, viewProductDetails} = useContext(ShopContext);
@@ -67,7 +69,7 @@ const prod = (props) => {
             <Link to='/details' onClick={() => viewProductDetails(id)
             }>
               <p className="text-center"><button className='fs-4' id='clear-cart'
-                onClick={() => updateProduct(3 , id)}
+                onClick={() => updateProduct(1 , id)}
               >View Details</button></p>
                 </Link>
                 </div>
